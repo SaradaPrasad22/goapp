@@ -1,12 +1,14 @@
+#Command to install go
 sudo apt update
 sudo apt install golang -y
 go version
+
+# create go.mod file 
 vi go.mod
+# Copy below line to go.mod
 module example.com/mod
-vi main.go
 
-
-sudo usrmod -a -G docker sarada_devopspoc
+# Docker file content
 vi Dockerfile
 # syntax=docker/dockerfile:1
   
@@ -19,16 +21,17 @@ RUN go mod download
 
 COPY *.go ./
 
-RUN go build -o /app
+RUN go build -o /goapp
 
 EXPOSE 8080
 
-CMD [ "/app" ]
+CMD [ "/goapp" ]
 
 
-
+# Build image
 docker build --tag goapp .
 
+# steps to install minikube
 insuall minikube'
 
 sudo apt-get update -y
@@ -53,7 +56,10 @@ minikube status
 minikube stop
 minikube delete
 
+# open tunnel in separte terminal 
 minikube tunnel
+
+#command to create deployement and expose
 minikube image load goapp
 kubectl apply -f deployment.yaml
 kubectl expose deployment hello-minikube --type=LoadBalancer --port=8080
